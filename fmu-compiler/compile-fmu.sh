@@ -1,4 +1,8 @@
 #!/bin/bash
+ORIGINAL_DIR="$(pwd)"
+
+cd "$(dirname "$0")"
+
 set -e
 
 #input must be a zip with a source folder
@@ -140,3 +144,4 @@ assemble $D $outputName
 
 echo Done
 readlink -f $outputName
+cd $ORIGINAL_DIR

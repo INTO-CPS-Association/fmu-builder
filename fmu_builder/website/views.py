@@ -6,7 +6,7 @@ import subprocess
 
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
-SCRIPT_PATH = os.path.join(CURRENT_DIR, "test.sh")
+SCRIPT_PATH = os.path.join(CURRENT_DIR, "../../fmu-compiler/compile-fmu.sh")
 
 
 class UploadForm(forms.Form):
@@ -30,12 +30,15 @@ class UploadView(FormView):
         input_file_path = input_file.temporary_file_path()
         input_file_name = input_file.name
         command = [SCRIPT_PATH, input_file_path]
-        self._command_output = subprocess.check_output(command)
-        with open("{}.zip".format(input_file_path), "rb") as f:
+        #self._command_output = subprocess.check_output(command)
+        output_file_path=""
+        for line in subprocess.check_output(command).split('\n'):
+            output_file_path = line
+        with open(output_file_path, "rb") as f:
             data = f.read()
         response = HttpResponse(data, content_type="application/zip")
         ascii_file_name = \
-            input_file_name.encode(encoding="ascii", errors="replace").decode()
+            output_file_path.encode(encoding="ascii", errors="replace").decode()
         response["Content-Disposition"] = \
-            'attachment; filename="{}.zip"'.format(ascii_file_name)
+            'attachment; filename="{}"'.format(ascii_file_name)
         return response
