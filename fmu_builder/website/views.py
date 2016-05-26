@@ -16,14 +16,22 @@ class UploadForm(forms.Form):
 class UploadView(FormView):
     template_name = "upload.html"
     form_class = UploadForm
+    _command_output = ""
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["command_output"] = self._command_output
+        print("weeeeee")
+        print(context)
+        return context
 
     def form_valid(self, form):
         input_file = form.cleaned_data["file"]
         input_file_path = input_file.temporary_file_path()
         input_file_name = input_file.name
         command = [SCRIPT_PATH, input_file_path]
-        output_file_path = subprocess.check_output(command).strip()
-        with open(output_file_path, "rb") as f:
+        self._command_output = subprocess.check_output(command)
+        with open("{}.zip".format(input_file_path), "rb") as f:
             data = f.read()
         response = HttpResponse(data, content_type="application/zip")
         ascii_file_name = \
