@@ -1,0 +1,3 @@
+[submodule "fmu-compiler/toolchains/cmake-toolchains"]
+	path = fmu-compiler/toolchains/cmake-toolchains
+	url = https://github.com/zyga/cmake-toolchains.git
