@@ -19,5 +19,6 @@ import fmu_builder.website.views
 
 urlpatterns = [
     url(r'^$', fmu_builder.website.views.UploadView.as_view()),
+    url(r'^fmubuilder/', fmu_builder.website.views.UploadView.as_view()),
     # url(r'^admin/', admin.site.urls),
 ]
