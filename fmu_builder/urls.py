@@ -1,24 +1,21 @@
-"""fmu_builder URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url
-from django.contrib import admin
 import fmu_builder.website.views
 
 urlpatterns = [
-    url(r'^$', fmu_builder.website.views.UploadView.as_view()),
-    url(r'^fmubuilder/', fmu_builder.website.views.UploadView.as_view()),
-    # url(r'^admin/', admin.site.urls),
+    url(r"^$", fmu_builder.website.views.UploadView.as_view()),
+    url(
+        r"^fmubuilder/$",
+        fmu_builder.website.views.UploadView.as_view(),
+        name="upload",
+    ),
+    url(
+        r"^fmubuilder/(?P<uuid>[a-z0-9-]{36})/$",
+        fmu_builder.website.views.UploadView.as_view(),
+        name="result",
+    ),
+    url(
+        r"^fmubuilder/download/(?P<uuid>[a-z0-9-]{36})/$",
+        fmu_builder.website.views.DownloadView.as_view(),
+        name="download",
+    ),
 ]

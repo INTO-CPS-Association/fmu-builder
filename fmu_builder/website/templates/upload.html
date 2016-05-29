@@ -7,9 +7,13 @@
           {{ form }}
           <input type="submit">
       </form>
+      {% if download_url %}
+      <a href="{{ download_url }}" target="_blank"><h2>Download build</h2></a>
       <div>
-        lalalala
+        <h3>Build log</h3>
         {{ command_output }}
       </div>
+      <a href="{{ download_url }}" target="_blank"><h2>Download build</h2></a>
+      {% endif %}
   </body>
 </html>
