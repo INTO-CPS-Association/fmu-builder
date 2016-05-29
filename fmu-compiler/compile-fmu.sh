@@ -121,7 +121,8 @@ D=$WD
 echo "Folder is ${D}"
 
 
-filename=$(basename "$INPUT")
+#filename=$(basename "$INPUT")
+filename=$2
 #name=`echo $D| sed 's|\./||g'`
 
 cp CMakeLists.txt $WD
