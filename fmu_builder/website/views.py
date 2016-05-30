@@ -65,8 +65,9 @@ class DownloadView(TemplateView):
         with open(file_path, "rb") as f:
             data = f.read()
         response = HttpResponse(data, content_type="application/zip")
-        ascii_file_name = \
-            file_path.encode(encoding="ascii", errors="replace").decode()
+        file_name = file_path.split("/")[-1]
+        ascii_file_name = file_name.encode(
+            encoding="ascii", errors="replace").decode()
         response["Content-Disposition"] = \
             'attachment; filename="{}"'.format(ascii_file_name)
         return response
