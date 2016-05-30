@@ -10,14 +10,14 @@
  
   <body>
       <h1>INTO-CPS FMU Builder</h1>
-        <div class="container">
+       
       <form action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ form }}
           <input type="submit" class="btn btn-default btn-sm">
       </form>
 
-        </div>
+       
       {% if download_url %}
       
        <div class="container">
@@ -39,6 +39,7 @@
    </div>   
       {% endif %}
       
+       <div class="container">
       <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Disclaimer</h3>
@@ -46,7 +47,7 @@
   <div class="panel-body">
     Disclaimer: THIS SOFTWARE AVAILABLE ON THE SITE SWENG.AU.DK IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL SWENG.AU.DK, THE UNIVERSITY OF AARHUS, OR ANY OF THEIR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
   </div>
-</div> 
+</div> </div> 
       
   </body>
 </html>
