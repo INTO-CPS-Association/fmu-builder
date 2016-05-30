@@ -12,11 +12,41 @@
     <div class="container">
       <h1>INTO-CPS FMU Builder</h1>
        
-      <form action="" method="post" enctype="multipart/form-data">
+      
+      
+     
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Upload Instructions</h3>
+  </div>
+  <div class="panel-body">
+   
+     The uploaded zip archieve must contain a 'sources' folder:
+     <ul>
+     <li>sources/ *.c, *.cpp</li>
+     </ul>
+     
+     These files will then be compiled as static linked libraries and added the the uploaded archieve using this structure:
+     <ul>
+     <li>binaries</li>
+     <ul>
+     <li>darwin64/*.dylib</li>
+      <li>linux64/*.so</li>
+       <li>linux32/*.so</li>
+        <li>win64/*.dll</li>
+         <li>win32/*.dll</li>
+     </ul>
+     </ul>
+     
+     <form action="" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ form }}
-          <input type="submit" class="btn btn-default btn-sm" value="Upload and Compile">
+          <input type="submit" class="btn btn-default btn-sm" value="Upload and Compile"/>
       </form>
+  </div>
+</div>
+
 
        
       {% if download_url %}
