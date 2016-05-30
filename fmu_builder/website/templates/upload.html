@@ -9,6 +9,7 @@
 </head>
  
   <body>
+    <div class="container">
       <h1>INTO-CPS FMU Builder</h1>
        
       <form action="" method="post" enctype="multipart/form-data">
@@ -20,7 +21,7 @@
        
       {% if download_url %}
       
-       <div class="container">
+       <div >
      <a href="{{ download_url }}" target="_blank" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-download-alt"></span> Download build</a>
       
       
@@ -39,7 +40,7 @@
    </div>   
       {% endif %}
       
-       <div class="container">
+     
       <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Disclaimer</h3>
