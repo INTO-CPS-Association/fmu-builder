@@ -42,7 +42,11 @@ class UploadView(FormView):
         input_file_path = input_file.temporary_file_path()
         input_file_name = input_file.name
         command = [SCRIPT_PATH, input_file_path, input_file_name]
-        command_output = subprocess.check_output(command).decode()
+        try:
+             command_output = subprocess.check_output(command,stderr=subprocess.STDOUT).decode()
+        except subprocess.CalledProcessError as e:
+             command_output = e.output.decode()
+
         download_file_path = command_output.split("\n")[-2]
         build_log = BuildLog.objects.create(
             command_output=command_output,
