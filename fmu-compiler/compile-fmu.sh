@@ -90,7 +90,7 @@ mkdir -p $B/fmu/binaries/{darwin64,win32,win64,linux32,linux64}
 
 echo Copying files...
 cp $1/modelDescription.xml $B/fmu/
-
+cp -r $1/resources $B/fmu/
 cp $1/sources/*.* $B/fmu/sources/
 
 BIN=$B/fmu/binaries
