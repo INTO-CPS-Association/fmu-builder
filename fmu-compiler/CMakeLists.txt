@@ -27,7 +27,7 @@ ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 file(GLOB C_FILES sources/*.c) # ../includes/templates/*.c)
-file(GLOB CPP_FILES sources/.cpp)
+file(GLOB CPP_FILES sources/*.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
 
