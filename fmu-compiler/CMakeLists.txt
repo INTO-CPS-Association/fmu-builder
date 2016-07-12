@@ -3,7 +3,7 @@ project ($ENV{FMU_NAME} C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR on)
 
-
+##DEFINITIONS##
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -26,12 +26,14 @@ ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-file(GLOB C_FILES sources/*.c) # ../includes/templates/*.c)
-file(GLOB CPP_FILES sources/*.cpp)
+file(GLOB C_FILES sources/*.c sources/**/*.c) # ../includes/templates/*.c)
+file(GLOB CPP_FILES sources/*.cpp sources/**/*.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
 
 include_directories(sources $ENV{FMI_INCLUDES}/fmi $ENV{FMI_INCLUDES}/templates)
+
+##INCLUDES##
 
 foreach(LETTER ${CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES})
 	
@@ -61,7 +63,7 @@ if (UNIX)
 ENDIF()
 ENDIF()
 
-target_link_libraries(${PROJECT_NAME} ${PTHREAD_LIBRARY})
+#target_link_libraries(${PROJECT_NAME} ${PTHREAD_LIBRARY})
 
 # I need this: -static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic
 

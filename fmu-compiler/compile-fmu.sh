@@ -90,7 +90,12 @@ mkdir -p $B/fmu/binaries/{darwin64,win32,win64,linux32,linux64}
 
 echo Copying files...
 cp $1/modelDescription.xml $B/fmu/
+
+if [ -e "$1/resources" ] 
+then
 cp -r $1/resources $B/fmu/
+fi
+
 cp $1/sources/*.* $B/fmu/sources/
 
 BIN=$B/fmu/binaries
@@ -127,6 +132,55 @@ filename=$2
 
 cp CMakeLists.txt $WD
 cp -r toolchains $WD
+
+
+# read defines if any
+if [ -e "$WD/sources/defines.def" ] 
+then
+
+defs=""
+
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    echo "Text read from file: $line"
+  defs="$defs -D$line"
+done < "$WD/sources/defines.def"
+
+
+defs="add_definitions(${defs})"
+
+sed -i "s/##DEFINITIONS##/${defs}/g" $WD/CMakeLists.txt
+
+
+fi
+
+# read additional includes if any
+if [ -e "$WD/sources/includes.txt" ] 
+then
+
+includes=""
+
+while IFS='' read -r line || [[ -n "$line" ]]; do
+    echo "Text read from file: $line"
+  includes="$includes sources/$line"
+done < "$WD/sources/includes.txt"
+
+
+includes="include_directories(${includes})"
+echo "additional includes ${includes}"
+sed -i "s|##INCLUDES##|${includes}|g" $WD/CMakeLists.txt
+
+
+fi
+
+echo "###########################################################"
+echo  CMakeLists.txt
+echo  "---------------------------------------------------------"
+cat  $WD/CMakeLists.txt
+
+
+echo "###########################################################"
+echo "###########################################################"
+
 
 filename="${filename%.*}"
 extension="${filename##*.}"
