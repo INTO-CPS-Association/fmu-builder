@@ -96,7 +96,7 @@ then
 cp -r $1/resources $B/fmu/
 fi
 
-cp $1/sources/*.* $B/fmu/sources/
+cp -r $1/sources/* $B/fmu/sources/
 
 BIN=$B/fmu/binaries
 cp $B/darwin/*.dylib $BIN/darwin64/
