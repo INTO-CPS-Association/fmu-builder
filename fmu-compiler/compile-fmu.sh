@@ -128,6 +128,7 @@ echo "Folder is ${D}"
 
 #filename=$(basename "$INPUT")
 filename=$2
+
 #name=`echo $D| sed 's|\./||g'`
 
 cp CMakeLists.txt $WD
@@ -185,7 +186,9 @@ echo "###########################################################"
 filename="${filename%.*}"
 extension="${filename##*.}"
 
-export FMU_NAME=$filename
+#export FMU_NAME=$filename
+export FMU_NAME=`awk -F'"' '/modelIdentifier/{print $2}' "$WD/modelDescription.xml"`
+
 export FMI_INCLUDE=`readlink -f includes`
 
 compileDarwin $D
