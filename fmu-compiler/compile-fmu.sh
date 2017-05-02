@@ -187,7 +187,7 @@ filename="${filename%.*}"
 extension="${filename##*.}"
 
 #export FMU_NAME=$filename
-export FMU_NAME=`awk -F'"' '/modelIdentifier/{print $2}' "$WD/modelDescription.xml"`
+export FMU_NAME=`grep modelIdentifier "$WD/modelDescription.xml" | awk -F'modelIdentifier="' '{print $2}' | awk -F'"' '{ print $1 }'`
 
 export FMI_INCLUDE=`readlink -f includes`
 
