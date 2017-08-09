@@ -74,7 +74,7 @@ function compileLinux32
 		rm -rf $B
 		mkdir -p $B
 
-		cmake -B$B -H$1 -DLINK_FLAGS="-m32" -DCFLAGS="-m32"
+		CFLAGS=-m32 CXXFLAGS=-m32 cmake -B$B -H$1
 
 		make -C $B		
 }
