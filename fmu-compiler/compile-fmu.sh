@@ -1,8 +1,6 @@
 #!/bin/bash
 ORIGINAL_DIR="$(pwd)"
 
-echo "HELLO, THIS IS THE CHANGE."
-
 cd "$(dirname "$0")"
 
 set -e
