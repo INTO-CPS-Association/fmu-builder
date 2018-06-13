@@ -30,7 +30,7 @@ file(GLOB C_FILES sources/*.c sources/**/*.c) # ../includes/templates/*.c)
 file(GLOB CPP_FILES sources/*.cpp sources/**/*.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
-
+echo "$ENV{FMI_INCLUDES"
 include_directories(sources $ENV{FMI_INCLUDES}/fmi $ENV{FMI_INCLUDES}/templates)
 
 ##INCLUDES##
