@@ -1,5 +1,9 @@
 # fmu-builder
 
+This branch contains a modified version of compile-fmu and cmakelists compared to the master branch.
+The difference is: 
+the master branch includes all .c files within the sources folder of an FMU, this branch includes only the ones listing within the `<SourceFiles>` tag of the ModelDescription.xml file - which is the correct behaviour according to the standard.
+
 ## Setup
 
 Make sure python 3 is installed

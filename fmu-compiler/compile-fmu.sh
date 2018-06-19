@@ -12,107 +12,107 @@ INPUT=$1
 function compileDarwin
 {
 
-		echo Building Darwin .dylib
-		B=$1/build/darwin
+    echo Building Darwin .dylib
+    B=$1/build/darwin
 
-		rm -rf $B
-		mkdir -p $B
+    rm -rf $B
+    mkdir -p $B
 
-		cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/osx-gcc.cmake` -DOSXCROSS_ROOT=$OSXCROSS_ROOT
+    cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/osx-gcc.cmake` -DOSXCROSS_ROOT=$OSXCROSS_ROOT
 
-		make -C $B
+    make -C $B
 
 }
 
 function compileWin32
 {
 
-		echo Building Win32 .dll
-		B=$1/build/win32
+    echo Building Win32 .dll
+    B=$1/build/win32
 
-		rm -rf $B
-		mkdir -p $B
+    rm -rf $B
+    mkdir -p $B
 
-		cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/cmake-toolchains/Toolchain-Ubuntu-mingw32.cmake`
+    cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/cmake-toolchains/Toolchain-Ubuntu-mingw32.cmake`
 
-		make -C $B
+    make -C $B
 
 }
 
 function compileWin64
 {
 
-		echo Building Win64 .dll
-		B=$1/build/win64
+    echo Building Win64 .dll
+    B=$1/build/win64
 
-		rm -rf $B
-		mkdir -p $B
+    rm -rf $B
+    mkdir -p $B
 
-		cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/cmake-toolchains/Toolchain-Ubuntu-mingw64.cmake`
+    cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/cmake-toolchains/Toolchain-Ubuntu-mingw64.cmake`
 
-		make -C $B
+    make -C $B
 
 }
 
 function compileLinux64
 {
-		echo Building Linux x64 .so
-		B=$1/build/linux64
-		rm -rf $B
-		mkdir -p $B
+    echo Building Linux x64 .so
+    B=$1/build/linux64
+    rm -rf $B
+    mkdir -p $B
 
-		cmake  -B$B -H$1
+    cmake  -B$B -H$1
 
-		make -C $B
+    make -C $B
 }
 
 function compileLinux32
 {
-		echo Building Linux x32 .so
-		B=$1/build/linux32
+    echo Building Linux x32 .so
+    B=$1/build/linux32
 
-		rm -rf $B
-		mkdir -p $B
+    rm -rf $B
+    mkdir -p $B
 
-		CFLAGS=-m32 CXXFLAGS=-m32 cmake -B$B -H$1
+    CFLAGS=-m32 CXXFLAGS=-m32 cmake -B$B -H$1
 
-		make -C $B		
+    make -C $B		
 }
 
 function assemble
 {
 
-B=$1/build/
+    B=$1/build/
 
-mkdir -p $B/fmu/{binaries,resources,sources}
+    mkdir -p $B/fmu/{binaries,resources,sources}
 
-mkdir -p $B/fmu/binaries/{darwin64,win32,win64,linux32,linux64}
+    mkdir -p $B/fmu/binaries/{darwin64,win32,win64,linux32,linux64}
 
-echo Copying files...
-cp $1/modelDescription.xml $B/fmu/
+    echo Copying files...
+    cp $1/modelDescription.xml $B/fmu/
 
-if [ -e "$1/resources" ] 
-then
-cp -r $1/resources $B/fmu/
-fi
+    if [ -e "$1/resources" ] 
+    then
+        cp -r $1/resources $B/fmu/
+    fi
 
-cp -r $1/sources/* $B/fmu/sources/
+    cp -r $1/sources/* $B/fmu/sources/
 
-BIN=$B/fmu/binaries
-cp $B/darwin/*.dylib $BIN/darwin64/
-cp $B/linux64/*.so $BIN/linux64/
-cp $B/linux32/*.so $BIN/linux32/
-cp $B/win64/*.dll $BIN/win64/
-cp $B/win32/*.dll $BIN/win32/
+    BIN=$B/fmu/binaries
+    cp $B/darwin/*.dylib $BIN/darwin64/
+    cp $B/linux64/*.so $BIN/linux64/
+    cp $B/linux32/*.so $BIN/linux32/
+    cp $B/win64/*.dll $BIN/win64/
+    cp $B/win32/*.dll $BIN/win32/
 
-echo Zipping...
+    echo Zipping...
 
-curdir="$PWD"
+    curdir="$PWD"
 
-cd $B/fmu/
-zip -r $2 .
+    cd $B/fmu/
+    zip -r $2 .
 
-cd $curdir
+    cd $curdir
 }
 
 
@@ -139,17 +139,17 @@ cp -r toolchains $WD
 if [ -e "$WD/sources/defines.def" ] 
 then
 
-defs=""
+    defs=""
 
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    echo "Text read from file: $line"
-  defs="$defs -D$line"
-done < "$WD/sources/defines.def"
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        echo "Text read from file: $line"
+        defs="$defs -D$line"
+    done < "$WD/sources/defines.def"
 
 
-defs="add_definitions(${defs})"
+    defs="add_definitions(${defs})"
 
-sed -i "s/##DEFINITIONS##/${defs}/g" $WD/CMakeLists.txt
+    sed -i "s/##DEFINITIONS##/${defs}/g" $WD/CMakeLists.txt
 
 
 fi
@@ -158,17 +158,17 @@ fi
 if [ -e "$WD/sources/includes.txt" ] 
 then
 
-includes=""
+    includes=""
 
-while IFS='' read -r line || [[ -n "$line" ]]; do
-    echo "Text read from file: $line"
-  includes="$includes sources/$line"
-done < "$WD/sources/includes.txt"
+    while IFS='' read -r line || [[ -n "$line" ]]; do
+        echo "Text read from file: $line"
+        includes="$includes sources/$line"
+    done < "$WD/sources/includes.txt"
 
 
-includes="include_directories(${includes})"
-echo "additional includes ${includes}"
-sed -i "s|##INCLUDES##|${includes}|g" $WD/CMakeLists.txt
+    includes="include_directories(${includes})"
+    echo "additional includes ${includes}"
+    sed -i "s|##INCLUDES##|${includes}|g" $WD/CMakeLists.txt
 
 
 fi
@@ -189,7 +189,15 @@ extension="${filename##*.}"
 #export FMU_NAME=$filename
 export FMU_NAME=`grep modelIdentifier "$WD/modelDescription.xml" | awk -F'modelIdentifier="' '{print $2}' | awk -F'"' '{ print $1 }'`
 
-export FMI_INCLUDE=`readlink -f includes`
+export FMI_INCLUDES=`readlink -f includes`
+
+#Read the values of the name attribute and scrap everything else:
+#<SourceFiles><File name="x1.c"/><File name="x2.c"/></SourceFiles>
+#thus SOURCES=x1.c x2.c.
+#Note -r is an argument to sed, which allows the alternation operator |. This is -E for MAC.
+SOURCES=`xmllint --xpath "//CoSimulation//SourceFiles//File//@name" $WD/modelDescription.xml | sed -r -e "s/(name=\"|\")//g" | sed 's/^ *//g'`
+echo "Sources: $SOURCES"
+export SOURCES=$SOURCES
 
 compileDarwin $D
 compileLinux64 $D
