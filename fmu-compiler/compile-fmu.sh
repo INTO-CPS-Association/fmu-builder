@@ -186,8 +186,7 @@ echo "###########################################################"
 filename="${filename%.*}"
 extension="${filename##*.}"
 
-#export FMU_NAME=$filename
-#export FMU_NAME=`grep modelIdentifier "$WD/modelDescription.xml" | awk -F'modelIdentifier="' '{print $2}' | awk -F'"' '{ print $1 }'`
+# Extract FMU name from the modelIdentifier attribute within the CoSimulation tag
 export FMU_NAME=`xmllint --xpath "string(//CoSimulation//@modelIdentifier)" "$WD/modelDescription.xml"`
 
 export FMI_INCLUDES=`readlink -f includes`
