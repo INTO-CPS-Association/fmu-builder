@@ -1,3 +1,12 @@
+# Prepends <prefix> to every entry in <arg> and stores in <var>
+FUNCTION(PREPEND var prefix arg)
+   SET(listVar "")
+   FOREACH(f ${arg})
+      LIST(APPEND listVar "${prefix}/${f}")
+   ENDFOREACH(f)
+   SET(${var} "${listVar}" PARENT_SCOPE)
+ENDFUNCTION(PREPEND)
+
 cmake_minimum_required (VERSION 2.8.5)
 project ($ENV{FMU_NAME} C CXX)
 
@@ -29,8 +38,20 @@ SET(CMAKE_VERBOSE_MAKEFILE ON)
 file(GLOB C_FILES sources/*.c sources/**/*.c) # ../includes/templates/*.c)
 file(GLOB CPP_FILES sources/*.cpp sources/**/*.cpp)
 
-add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
-echo "$ENV{FMI_INCLUDES"
+# Convert the $ENV{SOURCES} from: <x1.c x2.c> into a CMAKE list: <x1.c;x2.c> and store the result in $SRCS
+message(STATUS "ENV SOURCES: $END{SOURCES}")
+string(REPLACE " " ";" SRCS $ENV{SOURCES})
+message(STATUS "srcs: ${SRCS}")
+# Prepend the current directory and sources to all entries in $SRCS
+PREPEND(SRCSPRE ${CMAKE_CURRENT_SOURCE_DIR}/sources ${SRCS})
+message(STATUS "Prepended srcs: ${SRCSPRE}")
+
+# Add the $SRCSPRE
+add_library(${PROJECT_NAME} SHARED ${SRCSPRE})
+
+# OLD ADD_LIBRARY before including only the files listed within the modeldescription.
+#add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
+
 include_directories(sources $ENV{FMI_INCLUDES}/fmi $ENV{FMI_INCLUDES}/templates)
 
 ##INCLUDES##
