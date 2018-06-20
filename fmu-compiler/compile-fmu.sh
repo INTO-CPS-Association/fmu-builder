@@ -195,7 +195,7 @@ export FMI_INCLUDES=`readlink -f includes`
 #<SourceFiles><File name="x1.c"/><File name="x2.c"/></SourceFiles>
 #thus SOURCES=x1.c x2.c.
 #Note -r is an argument to sed, which allows the alternation operator |. This is -E for MAC.
-SOURCES=`xmllint --xpath "//CoSimulation//SourceFiles//File//@name" $WD/modelDescription.xml | sed -r -e "s/(name=\"|\")//g" | sed 's/^ *//g'`
+SOURCES=`xmllint --xpath "//CoSimulation//SourceFiles//File//@name" "$WD/modelDescription.xml" | sed -r -e "s/(name=\"|\")//g" | sed 's/^ *//g'`
 echo "Sources: $SOURCES"
 export SOURCES=$SOURCES
 
