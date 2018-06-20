@@ -39,7 +39,7 @@ file(GLOB C_FILES sources/*.c sources/**/*.c) # ../includes/templates/*.c)
 file(GLOB CPP_FILES sources/*.cpp sources/**/*.cpp)
 
 # Convert the $ENV{SOURCES} from: <x1.c x2.c> into a CMAKE list: <x1.c;x2.c> and store the result in $SRCS
-message(STATUS "ENV SOURCES: $END{SOURCES}")
+message(STATUS "ENV SOURCES: $ENV{SOURCES}")
 string(REPLACE " " ";" SRCS $ENV{SOURCES})
 message(STATUS "srcs: ${SRCS}")
 # Prepend the current directory and sources to all entries in $SRCS
