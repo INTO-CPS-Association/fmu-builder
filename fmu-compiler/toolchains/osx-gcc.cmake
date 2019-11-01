@@ -1,7 +1,6 @@
 include(CMakeForceCompiler)
 # the name of the target operating system
 SET(CMAKE_SYSTEM_NAME Darwin)
-
 # The libgit2 CMakeFile.txt needs this to be set:
 SET(CMAKE_SIZEOF_VOID_P 8)
 
@@ -15,12 +14,12 @@ message(STATUS Compiler.. ${CMAKE_C_COMPILER_ID} ${CMAKE_CXX_COMPILER_ID})
 
 
 # which compilers to use for C and C++
-cmake_force_c_compiler(${OSXCROSS_ROOT}/bin/x86_64-apple-darwin15-gcc GNU)
-cmake_force_cxx_compiler(${OSXCROSS_ROOT}/bin/x86_64-apple-darwin15-g++ GNU)
-SET(CMAKE_AR ${OSXCROSS_ROOT}/bin/x86_64-apple-darwin15-ar CACHE FILEPATH "Archiver")
-SET(PKG_CONFIG_EXECUTABLE ${OSXCROSS_ROOT}/bin/x86_64h-apple-darwin15-pkg-config)
+cmake_force_c_compiler(${OSXCROSS_ROOT}/bin/x86_64-apple-darwin19-gcc GNU)
+cmake_force_cxx_compiler(${OSXCROSS_ROOT}/bin/x86_64-apple-darwin19-g++ GNU)
+SET(CMAKE_AR ${OSXCROSS_ROOT}/bin/x86_64-apple-darwin19-ar CACHE FILEPATH "Archiver")
+SET(PKG_CONFIG_EXECUTABLE ${OSXCROSS_ROOT}/bin/x86_64h-apple-darwin19-pkg-config)
 
-SET(CMAKE_OSX_SYSROOT ${OSXCROSS_ROOT}/SDK/MacOSX10.11.sdk)
+SET(CMAKE_OSX_SYSROOT ${OSXCROSS_ROOT}/SDK/MacOSX10.15.sdk)
 
 # here is the target environment located
 #SET(CMAKE_FIND_ROOT_PATH ${CMAKE_OSX_SYSROOT} ${CMAKE_OSX_SYSROOT}/usr/bin)

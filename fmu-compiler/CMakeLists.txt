@@ -39,15 +39,11 @@ file(GLOB C_FILES sources/*.c sources/**/*.c) # ../includes/templates/*.c)
 file(GLOB CPP_FILES sources/*.cpp sources/**/*.cpp)
 
 # Convert the $ENV{SOURCES} from: <x1.c x2.c> into a CMAKE list: <x1.c;x2.c> and store the result in $SRCS
-message(STATUS "ENV SOURCES: $ENV{SOURCES}")
 string(REPLACE " " ";" SRCS $ENV{SOURCES})
 message(STATUS "srcs: ${SRCS}")
-# Prepend the current directory and sources to all entries in $SRCS
-PREPEND(SRCSPRE ${CMAKE_CURRENT_SOURCE_DIR}/sources ${SRCS})
-message(STATUS "Prepended srcs: ${SRCSPRE}")
 
 # Add the $SRCSPRE
-add_library(${PROJECT_NAME} SHARED ${SRCSPRE})
+add_library(${PROJECT_NAME} SHARED ${SRCS})
 
 # OLD ADD_LIBRARY before including only the files listed within the modeldescription.
 #add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})

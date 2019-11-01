@@ -1,6 +1,7 @@
 #!/bin/bash
 ORIGINAL_DIR="$(pwd)"
 
+export OSXCROSS_ROOT=/opt/osxcross/target
 cd "$(dirname "$0")"
 
 set -e
@@ -18,7 +19,7 @@ function compileDarwin
     rm -rf $B
     mkdir -p $B
 
-    cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/osx-gcc.cmake` -DOSXCROSS_ROOT=$OSXCROSS_ROOT
+    /opt/cmake-3.5.1-Linux-x86_64/bin/cmake  -B$B -H$1 -DCMAKE_TOOLCHAIN_FILE=`readlink -f toolchains/osx-gcc.cmake` -DOSXCROSS_ROOT=$OSXCROSS_ROOT 
 
     make -C $B
 
@@ -194,8 +195,11 @@ export FMI_INCLUDES=`readlink -f includes`
 #Read the values of the name attribute and scrap everything else:
 #<SourceFiles><File name="x1.c"/><File name="x2.c"/></SourceFiles>
 #thus SOURCES=x1.c x2.c.
+
+
+
 #Note -r is an argument to sed, which allows the alternation operator |. This is -E for MAC.
-SOURCES=`xmllint --xpath "//CoSimulation//SourceFiles//File//@name" "$WD/modelDescription.xml" | sed -r -e "s/(name=\"|\")//g" | sed 's/^ *//g'`
+SOURCES=`xmllint --xpath "//CoSimulation//SourceFiles//File//@name" "$WD/modelDescription.xml" | sed -r -e "s|(name=\")|$WD/sources/|g" | sed "s/\"//g" | sed "s|^ *||g"`
 echo "Sources: $SOURCES"
 export SOURCES=$SOURCES
 
