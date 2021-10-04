@@ -1,90 +1,99 @@
 <html>
 <head>
-  <title>INTO-CPS FMU Builder</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title>INTO-CPS FMU Builder</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
- 
-  <body>
-    <div class="container">
-      <h1>INTO-CPS FMU Builder</h1>
-       
-      
-      
-     
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Upload Instructions</h3>
-  </div>
-  <div class="panel-body">
-   
-     The uploaded zip archieve must contain a 'sources' folder:
-     <ul>
-     <li>sources/ *.c, *.cpp</li>
-     <li>sources/defines.def an optional file where defines can be listed one per line</li>
-     <li>sources/includes.txt an optional file where additional include directories can be listed one per line</li>
-     </ul>
-     
-     These files will then be compiled as static linked libraries and added the the uploaded archieve using this structure:
-     <ul>
-     <li>binaries</li>
-     <ul>
-     <li>darwin64/*.dylib</li>
-      <li>linux64/*.so</li>
-       <li>linux32/*.so</li>
-        <li>win64/*.dll</li>
-         <li>win32/*.dll</li>
-     </ul>
-     </ul>
-     
-    
-     <form action="" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form }}
-          <input type="submit" class="btn btn-default btn-sm" value="Upload and Compile"/>
-      </form>
-       </div>
-   
+<body>
+<div class="container">
+    <h1>INTO-CPS FMU Builder</h1>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Upload Instructions</h3>
+        </div>
+        <div class="panel-body">
+
+            The uploaded zip archieve must contain a 'sources' folder:
+            <ul>
+                <li>sources/ *.c, *.cpp</li>
+                <li>sources/defines.def an optional file where defines can be listed one per line</li>
+                <li>sources/includes.txt an optional file where additional include directories can be listed one per
+                    line
+                </li>
+            </ul>
+
+            These files will then be compiled as static linked libraries and added the the uploaded archieve using this
+            structure:
+            <ul>
+                <li>binaries</li>
+                <ul>
+                    <li>darwin64/*.dylib</li>
+                    <li>linux64/*.so</li>
+                    <li>linux32/*.so</li>
+                    <li>win64/*.dll</li>
+                    <li>win32/*.dll</li>
+                </ul>
+            </ul>
+
+
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" class="btn btn-default btn-sm" value="Upload and Compile"/>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    {% if download_url %}
+
+        <div>
+            <a href="{{ download_url }}" target="_blank" class="btn btn-success btn-lg"> <span
+                    class="glyphicon glyphicon-download-alt"></span> Download build</a>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Build log</h3>
+                </div>
+                <div class="panel-body">
+                    {{ command_output|linebreaksbr }}
+                </div>
+            </div>
+
+
+            <a href="{{ download_url }}" target="_blank" class="btn btn-success btn-lg"> <span
+                    class="glyphicon glyphicon-download-alt"></span> Download build</a>
+
+        </div>
+    {% endif %}
+
+
+    <div class="panel panel-default">
+        Updated October 4, 2021
+        <div class="panel-heading">
+            <h3 class="panel-title">Disclaimer</h3>
+        </div>
+        <div class="panel-body">
+            Disclaimer: THIS SOFTWARE AVAILABLE ON THE SITE SWENG.AU.DK IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED
+            WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+            PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL SWENG.AU.DK, THE UNIVERSITY OF AARHUS, OR ANY OF THEIR
+            CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+            (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+            OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+            LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+            EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        </div>
+    </div>
 </div>
 
-
-       
-      {% if download_url %}
-      
-       <div >
-     <a href="{{ download_url }}" target="_blank" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-download-alt"></span> Download build</a>
-      
-      
-      <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Build log</h3>
-  </div>
-  <div class="panel-body">
-     {{ command_output|linebreaksbr }}
-  </div>
-</div>
-      
-      
-      <a href="{{ download_url }}" target="_blank" class="btn btn-success btn-lg"> <span class="glyphicon glyphicon-download-alt"></span> Download build</a>
-      
-   </div>   
-      {% endif %}
-      
-     
-      <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Disclaimer</h3>
-  </div>
-  <div class="panel-body">
-    Disclaimer: THIS SOFTWARE AVAILABLE ON THE SITE SWENG.AU.DK IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL SWENG.AU.DK, THE UNIVERSITY OF AARHUS, OR ANY OF THEIR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
-  </div>
-</div> </div> 
-      
-  </body>
+</body>
 </html>
 
 
