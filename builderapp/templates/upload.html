@@ -17,9 +17,16 @@
         </div>
         <div class="panel-body">
 
-            The uploaded zip archieve must contain a 'sources' folder:
+            The uploaded zip archive must contain a 'sources' folder:
             <ul>
-                <li>sources/ *.c, *.cpp</li>
+                <li><b>Sources</b>
+                    <ul>
+                        <li>Sources will be included through the <code>modelDescription.xml:/CoSimulation//SourceFiles//File//@name</code>
+                        </li>
+
+                        <li>If no such element any sources in <code>sources/*.c, sources/*.cpp</code> will be included</li>
+                    </ul>
+                </li>
                 <li>sources/defines.def an optional file where defines can be listed one per line</li>
                 <li>sources/includes.txt an optional file where additional include directories can be listed one per
                     line
@@ -45,6 +52,7 @@
                 {{ form }}
                 <input type="submit" class="btn btn-default btn-sm" value="Upload and Compile"/>
             </form>
+
         </div>
 
     </div>
