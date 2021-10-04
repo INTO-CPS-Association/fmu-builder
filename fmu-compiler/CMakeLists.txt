@@ -10,6 +10,8 @@ ENDFUNCTION(PREPEND)
 cmake_minimum_required (VERSION 2.8.5)
 project ($ENV{FMU_NAME} C CXX)
 
+message(STATUS "ENV FMU NAME: $ENV{FMU_NAME}")
+
 set(CMAKE_INCLUDE_CURRENT_DIR on)
 
 ##DEFINITIONS##
@@ -43,11 +45,12 @@ message(STATUS "ENV SOURCES: $ENV{SOURCES}")
 string(REPLACE " " ";" SRCS $ENV{SOURCES})
 message(STATUS "srcs: ${SRCS}")
 # Prepend the current directory and sources to all entries in $SRCS
-PREPEND(SRCSPRE ${CMAKE_CURRENT_SOURCE_DIR}/sources ${SRCS})
+PREPEND(SRCSPRE "${CMAKE_CURRENT_SOURCE_DIR}/sources" "${SRCS}")
 message(STATUS "Prepended srcs: ${SRCSPRE}")
 
 # Add the $SRCSPRE
-add_library(${PROJECT_NAME} SHARED ${SRCSPRE})
+message(STATUS "PROJECT_NAME: [${PROJECT_NAME}]")
+add_library("${PROJECT_NAME}" SHARED ${SRCSPRE})
 
 # OLD ADD_LIBRARY before including only the files listed within the modeldescription.
 #add_library(${PROJECT_NAME} SHARED ${C_FILES} ${CPP_FILES})
