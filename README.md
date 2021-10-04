@@ -4,8 +4,6 @@ This branch contains a modified version of compile-fmu and cmakelists compared t
 The difference is: 
 the master branch includes all .c files within the sources folder of an FMU, this branch includes only the ones listing within the `<SourceFiles>` tag of the ModelDescription.xml file - which is the correct behaviour according to the standard.
 
-CMAKE cleanup and build: `rm CMakeCache.txt ; rm -rf CMakeFiles ; rm Makefile ; rm cmake_install.cmake ; cmake CMakeLists.txt ; make`
-
 ## Setup
 
 Make sure python 3 is installed
