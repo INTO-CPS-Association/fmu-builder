@@ -1,9 +1,9 @@
 #!/bin/bash
 
 cd $(dirname $0)
-
-export DJANGO_SETTINGS_MODULE="settings"
-export PYTHONPATH=./fmu_builder
+pwd
+export DJANGO_SETTINGS_MODULE="fmubuildersite.settings"
+export PYTHONPATH=./
 
 PIDFILE=uwsgi.pid
 
@@ -41,7 +41,7 @@ fi
 
 uwsgi \
   --http=$ADDRESS \
-  --wsgi=wsgi:application --need-app \
+  --wsgi=fmubuildersite.wsgi:application --need-app \
   --master --processes=$PROCESSES --threads=$THREADS --enable-threads \
   --stats=$STATS_ADDRESS \
   --log-x-forwarded-for \

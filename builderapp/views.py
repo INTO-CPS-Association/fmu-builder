@@ -1,5 +1,6 @@
 from django import forms
-from django.core import urlresolvers
+from django.urls import reverse
+
 from django.http import HttpResponse
 from django.http import HttpResponseNotAllowed
 from django.utils import html
@@ -31,7 +32,7 @@ class UploadView(FormView):
             return context
         build_log = BuildLog.objects.get(uuid=uuid)
         context["command_output"] = html.escape(build_log.command_output)
-        context["download_url"] = urlresolvers.reverse(
+        context["download_url"] = reverse(
             "download",
             kwargs={"uuid": uuid},
         )
@@ -52,7 +53,7 @@ class UploadView(FormView):
             command_output=command_output,
             output_file_path=download_file_path,
         )
-        self.success_url = urlresolvers.reverse(
+        self.success_url = reverse(
             "result",
             kwargs={"uuid": build_log.uuid},
         )

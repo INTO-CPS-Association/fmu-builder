@@ -2,3 +2,5 @@ db.sqlite3
 *.pyc
 uwsgi.log
 uwsgi.pid
+venv
+.idea

@@ -6,19 +6,27 @@ the master branch includes all .c files within the sources folder of an FMU, thi
 
 ## Setup
 
-Make sure python 3 is installed
+Make sure python 3 is installed with venv support
 ```bash
 git clone git@github.com:into-cps/fmu-builder.git fmu-builder
 // make virtual python 3 env
-mkvirtualenv --python=/usr/bin/python3 -a fmu-builder fmubuilder
-// install dependencies
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt 
+```
+
+Versions used at the time of development is:
+```
+uWSGI-2.0.19.1
+Django-3.2.7
 ```
 ## Start service as a user
 change to the user running the service e.g. `sudo su - fmubuilder`
 
 ```bash
-workon fmubuilder
+# if not already activated
+source venv/bin/activate
+
 ./start_uwsgi.sh 
 //or to stop the service
 ./stop_uwsgi.sh
@@ -37,7 +45,7 @@ export MACOSX_DEPLOYMENT_TARGET=10.7
 
 #!/bin/bash
 
-source /home/fmubuilder/.virtualenvs/fmubuilder/bin/activate
+source /home/fmubuilder/fmubuilder/venv/bin/activate
 
 export OSXCROSS_ROOT=/var/lib/osxcross/target
 export PATH=$OSXCROSS_ROOT/bin:$PATH
@@ -51,4 +59,17 @@ git pull
 crontab -l
 
 @reboot sleep 60 && /home/fmubuilder/start_fmu_builder.sh```
+```
+
+# Guide for creating the django structure
+
+```
+django-admin startproject fmubuildersite
+python manage.py startapp builderapp
+python manage.py runserver
+python manage.py migrate
+python manage.py makemigrations builderapp
+python manage.py sqlmigrate builderapp 0001
+python manage.py migrate
+python manage.py runserver
 ```
