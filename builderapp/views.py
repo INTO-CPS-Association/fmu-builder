@@ -11,9 +11,12 @@ import subprocess
 
 from .models import BuildLog
 
+from pathlib import Path
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
-SCRIPT_PATH = os.path.join(CURRENT_DIR, "../../fmu-compiler/compile-fmu.sh")
+SCRIPT_PATH = Path(__file__).parent.parent / 'fmu-compiler' / 'compile-fmu.sh'
+
+
 # SCRIPT_PATH = os.path.join(CURRENT_DIR, "test.sh")
 
 
@@ -42,11 +45,11 @@ class UploadView(FormView):
         input_file = form.cleaned_data["file"]
         input_file_path = input_file.temporary_file_path()
         input_file_name = input_file.name
-        command = [SCRIPT_PATH, input_file_path, input_file_name]
+        command = [SCRIPT_PATH.absolute(), input_file_path, input_file_name]
         try:
-             command_output = subprocess.check_output(command,stderr=subprocess.STDOUT).decode()
+            command_output = subprocess.check_output(command, stderr=subprocess.STDOUT).decode()
         except subprocess.CalledProcessError as e:
-             command_output = e.output.decode()
+            command_output = e.output.decode()
 
         download_file_path = command_output.split("\n")[-2]
         build_log = BuildLog.objects.create(
