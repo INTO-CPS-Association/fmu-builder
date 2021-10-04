@@ -24,16 +24,28 @@
                         <li>Sources will be included through the <code>modelDescription.xml:/CoSimulation//SourceFiles//File//@name</code>
                         </li>
 
-                        <li>If no such element any sources in <code>sources/*.c, sources/*.cpp</code> will be included</li>
+                        <li>If no such element any sources in <code>sources/*.c, sources/*.cpp</code> will be included
+                        </li>
                     </ul>
                 </li>
-                <li>sources/defines.def an optional file where defines can be listed one per line</li>
-                <li>sources/includes.txt an optional file where additional include directories can be listed one per
-                    line
+                <li><b>Defines</b>
+                    <ul>
+                        <li>Defined must be specified in a file <code>sources/defines.def</code> with one define per
+                            line as: <code>MY_DEFINE=1</code>
+                        </li>
+                    </ul>
+                </li>
+                <li><b>Includes</b>
+                    <ul>
+                        <li>Additional includes must be specified in <code>sources/includes.txt</code> one per line
+                            relative to the source folder. May refer to sub folders or system includes.
+                        </li>
+
+                    </ul>
                 </li>
             </ul>
 
-            These files will then be compiled as static linked libraries and added the the uploaded archieve using this
+            These files will then be compiled as static linked libraries and added the the uploaded archive using this
             structure:
             <ul>
                 <li>binaries</li>
@@ -70,9 +82,9 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Build log</h3>
                 </div>
-                <div class="panel-body"><p class="text-monospace">
+                <div class="panel-body"><code style="color:black;background-color: white">
                     {{ command_output|linebreaksbr }}
-                    </p>
+                </code>
                 </div>
             </div>
 

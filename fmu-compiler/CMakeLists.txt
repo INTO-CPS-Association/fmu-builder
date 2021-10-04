@@ -37,7 +37,11 @@ ENDIF (CMAKE_COMPILER_IS_GNUCXX)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-IF (DEFINED ENV{SOURCES} AND NOT ("${SOURCES}" STREQUAL ""))
+message(STATUS "ENV SOURCES: $ENV{SOURCES}")
+
+
+
+IF (DEFINED ENV{SOURCES} AND NOT ("$ENV{SOURCES}" STREQUAL ""))
     #
     # A proper packed FMU should list the source files in /CoSimulation//SourceFiles//File//@name of the model description
     #
@@ -58,29 +62,35 @@ else ()
     #
     # If no sources files are listed in the model description then fall back to looking for source files in the source root
     #
-    file(GLOB C_FILES sources/*.c sources/*.c) # ../includes/templates/*.c)
-    file(GLOB CPP_FILES sources/*.cpp sources/*.cpp)
+    file(GLOB C_FILES sources/*.c) # ../includes/templates/*.c)
+    file(GLOB CPP_FILES sources/*.cpp)
 
     message(WARNING "The FMU does not contain a sources section so all source files will be used in the sources root dir")
     add_library("${PROJECT_NAME}" SHARED ${C_FILES} ${CPP_FILES})
 ENDIF ()
 
-include_directories(sources $ENV{FMI_INCLUDES}/fmi $ENV{FMI_INCLUDES}/templates)
+include_directories(sources $ENV{FMI_INCLUDES}/fmi ) #$ENV{FMI_INCLUDES}/templates
 
 ##INCLUDES##
 
-foreach (LETTER ${CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES})
-
-    if (EXISTS "${LETTER}/libstdc++.a")
-        #   message (STATUS "${LETTER}")
-        set(STDCPP_LIBRARY "${LETTER}/libstdc++.a")
-    else ()
-        #  message (STATUS "${LETTER} ---- not these")
-    endif ()
-endforeach ()
-
-message(STATUS "Static linking with libstdc++.a in ${STDCPP_LIBRARY}")
+#foreach (LETTER ${CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES})
+#
+#    if (EXISTS "${LETTER}/libstdc++.a")
+#        #   message (STATUS "${LETTER}")
+#        set(STDCPP_LIBRARY "${LETTER}/libstdc++.a")
+#    else ()
+#        #  message (STATUS "${LETTER} ---- not these")
+#    endif ()
+#endforeach ()
+#
+#message(STATUS "Static linking with libstdc++.a in ${STDCPP_LIBRARY}")
 target_link_libraries(${PROJECT_NAME} ${STDCPP_LIBRARY})
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message("Compiler is clang not adding -static-libgcc")
+else ()
+    string(APPEND CMAKE_SHARED_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+endif ()
 
 
 #IF(NOT(DEFINED XOSX))
@@ -102,13 +112,15 @@ if (WIN32)
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++ -static-libgcc")
 endif ()
 
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 if (UNIX)
     if (APPLE)
 
     else ()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+#        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
         target_link_libraries(${PROJECT_NAME} m)
 
     endif ()
